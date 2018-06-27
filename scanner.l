@@ -1,6 +1,5 @@
 %{
-
-    #include"out/parser.h"
+    #include"parser.h"
     #include<stdlib.h>
 
 %}
@@ -17,14 +16,13 @@ IDENT       ([a-zA-Z]+)
 
 %%
 
-{COM} { printf("[F]COM ;\n"); return COM; }
-{DIGITS}    { yylval = atoi(yytext); printf("[F]Zwracam liczbe: %d\n", yylval); return DIGITS; } 
-{OPER} {  yylval=yytext; printf("[F]Zwracam oper %s \n", yylval); return OPER; }
-.     printf("[F]Unkown: %s\n", yytext);
-
+{COM} { printf("[F]COM\n"); return COM; }
+{DIGITS}    { yylval.val = atoi(yytext); printf("[F]Zwracam liczbe: %d\n", yylval.val); return DIGITS; } 
+{OPER} {  yylval.ch = yytext[0]; printf("[F]Zwracam oper %c \n", yylval.ch); return OPER; }
 %%
 
 /*
+.     printf("[F]Unkown: %s\n", yytext);
 
 {COM}       {}
 {ASSIGN}    cout<<"ASSIGN "<<yytext<<endl;

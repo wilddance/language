@@ -1,4 +1,4 @@
-G=g++ -g
+G=gcc -g
 
 OUT=bin/scanner
 
@@ -22,7 +22,10 @@ out:
 bin:
 	mkdir bin
 
-.PHONY: clear
+.PHONY: clear run
+
+run: $(OUT)
+	./bin/scanner
 
 clear:
 	rm out/*

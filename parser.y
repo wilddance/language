@@ -2,32 +2,49 @@
     #include<stdio.h>
 %}
 
+%union{
+    int val;
+    char ch;
+}
+
 %token DIGITS
 %token OPER
 %token COM
+
+%type<val> exp DIGITS value
+%type<ch> OPER 
 
 %%
 
 s: 
  | s value
 
-value: exp | DIGITS { printf("Value: %d", $$); }
+value: exp { printf("Value: %d", $$); }
 
-exp: DIGITS OPER DIGITS { 
+exp: exp OPER DIGITS {
 
-    printf("\nExpr: \n $$ = %s, $1 = %s, $2:%s \n", $1, $1, $2);
+    puts("Mamy expr!");
+    printf("$1 = %d\n", $1);
+    printf("$2 = %c\n", $2);
+    printf("$3 = %d\n", $3);
+
+    $$ = $1 + $3;
+
     switch($2){
         case '+':
             $$ = $1 + $3; break;
         case '-':
-            $$ = $1 + $3; break;
+            $$ = $1 - $3; break;
         case '*':
-            $$ = $1 + $3; break;
+            $$ = $1 * $3; break;
         case '/':
-            $$ = $1 + $3; break;
-    } 
+            $$ = $1 / $3; break;
+    }
 
-  }
+}
+
+exp: DIGITS
+
 
 %%
 
