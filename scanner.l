@@ -1,7 +1,9 @@
 %{
 
-  #include <iostream>
-  using namespace std;
+    #include "parser.tab.h"
+    #include<stdlib.h>
+
+    
 
 %}
 
@@ -10,25 +12,28 @@ BOOL_OP     ("and"|"or")
 KEYWORD     ("if"|"while"|"print"|"read"|"begin"|"end"|"exit")
 BOOL        ("true"|"false")
 OPER        ("+"|"-"|"*"|"/"|"%")
-DIGIT       ([0-9])
-DIGITS      {DIGIT}*
+DIGITS      [0-9]+
 REL         ("="|"<"|"<="|">"|">="|"<>")
 ASSIGN      (":=")
 IDENT       ([a-zA-Z]+)
 
 %%
 
+{COM} { printf("[F]COM ;\n"); return COM; }
+{DIGITS}    { yylval = atoi(yytext); printf("[F]Zwracam liczbe: %d\n", yylval); return DIGITS; } 
+{OPER} {  yylval=yytext; printf("[F]Zwracam oper %s \n", yylval); return OPER; }
+.     printf("[F]Unkown: %s\n", yytext);
+
+%%
+
+/*
+
 {COM}       {}
 {ASSIGN}    cout<<"ASSIGN "<<yytext<<endl;
 {OPER}      cout<<"NUM_OP "<<yytext<<endl;
-{DIGITS}    cout<<"DIGIT "<<yytext<<endl;
 {BOOL}      cout<<"BOOL "<<yytext<<endl;
 {KEYWORD}   cout<<"KEYWORD "<<yytext<<endl;
 {IDENT}     cout<<"IDENT "<<yytext<<endl;
-";"|" "|\n      {}  
-.           cout<<"Unkown: "<<yytext<<endl;
-
-%%
 
 int main() {
 
@@ -36,4 +41,4 @@ int main() {
 
     return 0;
 
-}
+}*/
