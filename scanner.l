@@ -1,9 +1,7 @@
 %{
 
-    #include "parser.tab.h"
+    #include"out/parser.h"
     #include<stdlib.h>
-
-    
 
 %}
 
