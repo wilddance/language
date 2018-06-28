@@ -8,10 +8,13 @@ out/scanner.cpp: out scanner.l
 	flex -oscanner.cpp scanner.l 
 	mv scanner.cpp out
 
-out/parser.hpp out/parser.ypp: out parser.ypp
-	bison -d parser.ypp
+
+out/parser.hpp out/parser.ypp: out parser.ypp grammars/*
+	python3 build_parser.py
+	bison -d out/parser.ypp
 	mv parser.tab.hpp out/parser.h
 	mv parser.tab.cpp out/parser.cpp
+
 
 $(OUT): bin out/parser.hpp out/scanner.cpp classes/Vars.cpp
 	$(G) -o $(OUT) out/parser.cpp out/scanner.cpp -lfl

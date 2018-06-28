@@ -19,7 +19,7 @@
 %option yylineno
 
 COM         ("#".*\n)
-END         ("debug")
+DEBUG       ("debug")
 BOOL_OP     ("and"|"or")
 KEYWORD     ("while"|"print"|"begin"|"end"|"exit")
 IF          "if"|"IF"

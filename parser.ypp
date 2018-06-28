@@ -83,7 +83,7 @@
 %token DIGITS
 %token COM
 %token READ
-%token END
+%token DEBUG
 %token BOOL_VAL
 
 %token STARTBLOCK
@@ -93,82 +93,20 @@
 %type<val> exp DIGITS value
 %type<ch> OPER 
 %type<s> IDENT BOOL_VAL
-%type<s> READ END 
+%type<s> READ DEBUG
 %type<ch> STARTBLOCK ENDBLOCK
 
 
 %%
 
 s: 
- | s read | s value | s end | s if | s bool
-
-value: exp { printf("Value: %d\n", $$); }
-read: READ IDENT{ sprintf(buff, "READ $%d", v.get(std::string($2))); nextLine(); }
-end: END {end();}
-    
-///////////////// 
-// Boolean stuff
-/////////////////
-if: IF bool {}
+ | s read | s value | s debug | s if | s bool
 
 
-bool: IDENT REL_OPER IDENT{ 
-    printf("Wyrażenie Bool\n");  
-
-    printf("$1 = %s\n", $1);
-
-    printf("$3 = %s\n", $3);
-    push($1);
-    push($3);
-    jlz();
-} | BOOL_VAL  
-
-i: IDENT {}
-
-
-// block: STARTBLOCK ENDBLOCK { puts("Blok"); }
-// bool: bool_exp BOOL_OPER bool_exp {  }
-
-/////////////////
-// Standard number operations
-/////////////////
-exp: exp OPER DIGITS {
-
-    puts("Mamy expr!");
-    /*
-    printf("$1 = %d\n", $1);
-    printf("$2 = %c\n", $2);
-    printf("$3 = %d\n", $3);
-    */
-
-    $$ = $1 + $3;
-    switch($2){
-        case '+':
-            $$ = $1 + $3; break;
-        case '-':
-            $$ = $1 - $3; break;
-        case '*':
-            $$ = $1 * $3; break;
-        case '/':
-            $$ = $1 / $3; break;
-    }
-} | DIGITS | '(' exp ')'
+PLACEHOLDER
 
 %%
 
-/*
-
-line:  DIGITS { printf("LICZBA %d", $$); } | 
-DIGITS PLUS { printf("LICXZBA z plusem %d", $$); }
-        | COM {printf("Dupa");}
-
-
-int yyerror(const char* s) {
-	fprintf(stderr, "Parse error for token: %s\n", s);
-	exit(1);
-}
-
-*/
 int yyerror (const char *msg) {
   printf("oha, %s: text: '%s' val: %s in line %d\n", msg, yytext, yylval, yylineno);
   return 0;
