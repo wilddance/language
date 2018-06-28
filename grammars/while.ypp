@@ -1,0 +1,40 @@
+%%
+%%
+
+while: while_bool block END_ST{
+
+    lines.unnest();
+
+    //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
+    int jump_line = lines.code_size() + help;
+
+    char b[10] = {0};
+
+    sprintf(b, "@%d", jump_line);
+
+    char* a = strdup(b);
+    jlz(a);
+
+    memset(b, 0, sizeof(char)*10);
+    lines.copy_buffer();
+
+    // goto, overriding jump line
+    jump_line = line_stack.top();
+    line_stack.pop();
+    sprintf(b, "@%d", jump_line);
+    gotoline(b);
+
+    help -= 2;
+}
+
+while_bool: while bool_exp{
+    lines.nest();
+}
+
+while: WHILE{ 
+    help += 2;
+    printf("TEATATTTA\n");
+    line_stack.push(lines.code_size());
+}
+
+

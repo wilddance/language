@@ -18,7 +18,11 @@
 
 %option yylineno
 
+BEG         "begin"
+WHILE       "while"
+END         "end"
 COM         ("#".*\n)
+END_ST      ";"
 DEBUG       ("debug")
 BOOL_OP     ("and"|"or")
 KEYWORD     ("while"|"print"|"begin"|"end"|"exit")
@@ -33,16 +37,11 @@ IDENT       ([a-z]+)
 
 %%
 
-{  { d("[F] Start block: %s\n"); return STARTBLOCK; }
-}  { d("[F] Stop block: %s\n"); return ENDBLOCK; }
-{REL_OPER}  { 
-
-printf("[F] REL_OPER: %s\n", yytext); 
-        yylval.val = 1;
-    
-  return REL_OPER; 
-}
-
+{REL_OPER}  { printf("[F] REL_OPER: %s\n", yytext); yylval.val = 1; return REL_OPER; }
+{BEG}       { d("[F]Beg\n");        return BEG; }
+{WHILE}     { d("[F]While\n");      return WHILE; }
+{END}       { d("[F]End\n");        return END; }
+{END_ST}    { d("[F]End_st\n");     return END_ST; }
 {BOOL_VAL}  { d("[F]Bool\n");       return BOOL_VAL; }
 {DEBUG}     { d("[F]Debug\n");      return DEBUG;}
 {IF}        { d("[F]If\n");         return IF;}
@@ -55,6 +54,8 @@ printf("[F] REL_OPER: %s\n", yytext);
 %%
 
 /*
+{  { d("[F] Start block: %s\n"); return STARTBLOCK; }
+}  { d("[F] Stop block: %s\n"); return ENDBLOCK; }
 {KEYWORD}   { d("KEYWORD: %s\n",yytext); return IDENT; }
 .     printf("[F]Unkown: %s\n", yytext);
 

@@ -4,10 +4,12 @@
     #include<string>
     #include<string.h>
     #include<vector>
+    #include<stack>
+
     #include"../classes/Vars.cpp"
     #include"../defs.h"
 
-    //#ifndef FLEX_DEBUG printf(...) printf("")
+    //#ifndef NO_FLEX_DEBUG printf(...) printf("")
         
     ///////////////
     // Bison/flex stuff
@@ -22,18 +24,23 @@
     ///////////////
     // Custom part
     ///////////////
-    Vars v;
 
-    int line = 0;
+    // Custom buffers, do not touch
     char buff[100];
     string s;
+    stack<int> line_stack;
 
-    vector<string> lines;
+    int help = 0;
 
+    // Helpers
+    Vars v;
+    Code lines;
+
+    int line = 0;
     void nextLine(){
         s = string(buff);
-        lines.push_back(s);
-        printf("%d. %s\n", lines.size(), buff);
+        lines.push(s);
+        printf("%s\n", buff);
         memset(buff, 0, 100);
     }
 
@@ -46,27 +53,29 @@
         nextLine("SUB");
     }
 
-    // TODO: parameter
-    void jlz(){
-        nextLine("JLZ");
+    void jlz(char* line){
+        sprintf(buff, "JLZ %s", line);
+        nextLine();
+    }
+
+    void gotoline(char* line){
+        sprintf(buff, "GOTO %s", line);
+        nextLine();
     }
 
     void push(char* name){
-        sprintf(buff, "PUSH $ %d", v.get(name)) ;
+        sprintf(buff, "PUSH %s", name) ;
         nextLine();
     }
 
     void pop(char* name){
-        sprintf(buff, "POP $%d", v.get(name) );
+        sprintf(buff, "POP $%s", name );
         nextLine();
     }
     
     // debug method only
     void debug(){
-        puts("Code:");
-        for(int i = 0; i < lines.size();i++){
-            puts(lines[i].c_str());
-        }        
+        lines.print();
     }
 %}
 
@@ -76,8 +85,9 @@
     char* s;
 }
 
-%token IF
+%token IF WHILE BEG END
 %token REL_OPER
+%token END_ST
 %token IDENT 
 %token OPER
 %token DIGITS
@@ -89,18 +99,21 @@
 %token STARTBLOCK
 %token ENDBLOCK
 
-%type<int> REL_OPER bool
+%type<val> bool
+%type<val> REL_OPER 
 %type<val> exp DIGITS value
 %type<ch> OPER 
-%type<s> IDENT BOOL_VAL
+%type<s> IDENT BOOL_VAL adr
 %type<s> READ DEBUG
 %type<ch> STARTBLOCK ENDBLOCK
 
 
 %%
 
-s: 
- | s read | s value | s debug | s if | s bool
+
+
+s:
+ | s read | s value | s debug | s if | s bool | s while
 
 
 PLACEHOLDER

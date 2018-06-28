@@ -1,0 +1,50 @@
+%%
+%%
+
+bool_exp: adr REL_OPER adr {
+
+    push($1);
+    push($3);
+
+    // TODO: zależy od rel_oper
+    sub();
+        
+} | 
+
+
+adr:
+IDENT {
+    char b[10] = {0};
+    sprintf(b, "$%d", v.get($1));
+    string ss(b); 
+
+    char* sss = strdup(ss.c_str());
+    $$ = sss;
+} | 
+DIGITS {
+    char b[10] = {0};
+    sprintf(b, "%d", $1);
+    string ss(b);
+    char* sss = strdup(ss.c_str());
+    $$ = sss; 
+   }
+
+bool: IDENT REL_OPER IDENT{ 
+
+    printf("Wyrażenie Bool\n");  
+    printf("$1 = %s\n", $1);
+    printf("$3 = %s\n", $3);
+
+    push($1);
+    push($3);
+
+    $$ = $2;
+
+// na początku goto koniec jeśli 
+
+
+} | 
+BOOL_VAL {
+
+    
+}

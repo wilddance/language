@@ -1,16 +1,31 @@
 %%
 %%
 
-if: IF bool {}
+if: if_bool block END_ST{
 
-bool: IDENT REL_OPER IDENT{ 
-    printf("Wyrażenie Bool\n");  
+    lines.unnest();
 
-    printf("$1 = %s\n", $1);
+    //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
+    //int jump_line = lines.code_size() + help + lines.nestLvl;
+    int jump_line = lines.code_size() + help;
+    char b[10] = {0};
 
-    printf("$3 = %s\n", $3);
-    push($1);
-    push($3);
-    jlz();
-} | BOOL_VAL  
+    sprintf(b, "@%d", jump_line);
 
+    char* a = strdup(b);
+    jlz(a);
+
+    lines.copy_buffer();
+
+    help -= 1;
+}
+
+// odpowiada za pushe i jump
+if_bool: if bool_exp{
+    help += 1;
+    lines.nest();
+}
+
+if: IF {
+    //line_stack.push(lines.code_size_cur());
+}
