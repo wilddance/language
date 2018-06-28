@@ -1,20 +1,20 @@
-G=gcc -g
+G=g++ -g -std=c++11
 
 OUT=bin/scanner
 
 all: $(OUT)
 
-out/scanner.c: out scanner.l
-	flex -oscanner.c scanner.l 
-	mv scanner.c out
+out/scanner.cpp: out scanner.l
+	flex -oscanner.cpp scanner.l 
+	mv scanner.cpp out
 
-out/parser.h: out parser.y
-	bison -d parser.y
-	mv parser.tab.h out/parser.h
-	mv parser.tab.c out/parser.c
+out/parser.hpp out/parser.ypp: out parser.ypp
+	bison -d parser.ypp
+	mv parser.tab.hpp out/parser.h
+	mv parser.tab.cpp out/parser.cpp
 
-$(OUT): bin out/parser.h out/scanner.c 
-	$(G) -o $(OUT) out/parser.c out/scanner.c -lfl
+$(OUT): bin out/parser.hpp out/scanner.cpp classes/Vars.cpp
+	$(G) -o $(OUT) out/parser.cpp out/scanner.cpp -lfl
 
 out:
 	mkdir out
@@ -28,5 +28,6 @@ run: $(OUT)
 	./bin/scanner
 
 clear:
-	rm out/*
+	rm -f out/*
+	rm -f bin/*
 
