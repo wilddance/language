@@ -82,7 +82,7 @@ public:
     void print(){
 
         puts("Code:");
-        int k = 1;
+        int k = 0;
         for(int i = 0; i < 100; i++){
 
             vector<string> v = nests[i];

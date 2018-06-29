@@ -7,7 +7,7 @@ if: if_bool block END_ST{
 
     //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
     //int jump_line = lines.code_size() + help + lines.nestLvl;
-    int jump_line = lines.code_size() + help;
+    int jump_line = lines.code_size() + help - lines.nestLvl;
     char b[10] = {0};
 
     sprintf(b, "@%d", jump_line);
@@ -17,6 +17,7 @@ if: if_bool block END_ST{
 
     lines.copy_buffer();
 
+    help--;
 }
 
 // odpowiada za pushe i jump
@@ -25,5 +26,5 @@ if_bool: if bool_exp{
 }
 
 if: IF {
-    //line_stack.push(lines.code_size_cur());
+    help++;
 }
