@@ -3,35 +3,26 @@
 
 while: while_bool block END_ST{
 
+    // making Code save code to brevious branch
     lines.unnest();
 
-    //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
-
-    // przed dodatniem jump i goto
-    //////////////// jump
-    // +3 ; dodaje siebie, cyzli skok, goto, oraz przejście na kolejny wyraz
+    // address for jump after finishing while
     int jump_line = lines.code_size_cur() + help - lines.nestLvl;
-    ////////////////
 
-    char b[10] = {0};
-    sprintf(b, "@%d", jump_line);
-    char* a = strdup(b);
-    jlz(a);
-    memset(b, 0, sizeof(char)*10);
+    // adding instruction to jump
+    jlz(str("@%d", jump_line));
 
-    //////////////// goto
-    printf("AAAAAAAAAAAAAAAAAAhelp: %d\n", help);
-    jump_line = line_stack.top() + lines.nestLvl;
-    line_stack.pop();
-    ////////////////
-
-    help-=2;
-
+    // copying block instruction to branch
     lines.copy_buffer();
 
-    sprintf(b, "@%d", jump_line);
-    gotoline(b);
+    // getting goto-loop address
+    jump_line = line_stack.top() + lines.nestLvl;
+    line_stack.pop();
 
+    // adding goto line
+    gotoline(str("@%d", jump_line));
+
+    help-=2;
 }
 
 while_bool: while bool_exp{
@@ -39,9 +30,7 @@ while_bool: while bool_exp{
 }
 
 while: WHILE{ 
-    help+= 2;
-    printf("AAAAAAAAAAAAAAAAAA: %d\n", lines.code_size());
-    //line_stack.push(lines.code_size_cur());
+    help += 2;
     line_stack.push(lines.code_size());
 }
 

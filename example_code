@@ -1,0 +1,10 @@
+ifelse(a==b){
+    ifelse(a==b){
+       read c; 
+    } else {
+        read d;
+    };
+} else {
+    read e;
+};
+debug

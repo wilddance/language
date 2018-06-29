@@ -1,0 +1,37 @@
+%%
+%%
+
+if: ifelse_bool block else block END_ST {
+
+    // making Code save code to brevious branch
+    lines.unnest();
+
+    // obsługa else
+    int goto_line = lines.code_size_cur() + help + 1 - lines.nestLvl;
+
+    gotoline(str("@%d", goto_line));
+    lines.copy_buffer();
+
+
+    // making Code save code to brevious branch
+    lines.unnest();
+
+    help--;
+    help--;
+    int jump_line = lines.code_size_cur() + help - lines.nestLvl;
+    jlz(str("@%d", jump_line));
+
+    lines.copy_buffer();
+
+    
+}
+
+else: ELSE{
+    lines.nest();
+}
+
+ifelse_bool: IFELSE bool_exp{
+    puts("Starting ifelse");
+    help+=2;
+    lines.nest();
+}

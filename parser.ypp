@@ -103,7 +103,7 @@
     char* s;
 }
 
-%token IF WHILE BEG END ELSE
+%token IF WHILE BEG END ELSE IFELSE
 %token REL_OPER
 %token END_ST
 %token IDENT 

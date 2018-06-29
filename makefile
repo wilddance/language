@@ -4,7 +4,7 @@ OUT=bin/scanner
 
 all: $(OUT)
 
-out/scanner.cpp: out scanner.l
+out/scanner.cpp: out scanner.l parser.ypp grammars/*
 	flex -oscanner.cpp scanner.l 
 	mv scanner.cpp out
 

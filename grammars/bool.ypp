@@ -9,7 +9,7 @@ bool_exp: adr REL_OPER adr {
     // TODO: zależy od rel_oper
     sub();
         
-} | 
+} | '(' adr REL_OPER adr ')' 
 
 
 adr:

@@ -1,24 +1,20 @@
 %%
 %%
 
+
 if: if_bool block END_ST{
 
     lines.unnest();
 
     int jump_line = lines.code_size() + help - lines.nestLvl;
-    char* a = str("@%d", jump_line);
-
-    jlz(a);
+    jlz(str("@%d", jump_line));
 
     lines.copy_buffer();
     help--;
 }
 
 // odpowiada za pushe i jump
-if_bool: if bool_exp{
-    lines.nest();
-}
-
-if: IF {
+if_bool: IF bool_exp{
     help++;
+    lines.nest();
 }

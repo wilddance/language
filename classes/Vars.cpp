@@ -64,7 +64,7 @@ public:
         
     int code_size_cur(){
         int ret = 0;
-        for(int i =0; i<100; i++){
+        for(int i=0; i<100; i++){
             ret += nests[i].size();
         }
         return ret;
