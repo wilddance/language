@@ -9,8 +9,10 @@ while: while_bool block END_ST{
     // address for jump after finishing while
     int jump_line = lines.code_size_cur() + help - lines.nestLvl;
 
+    
     // adding instruction to jump
     jlz(str("@%d", jump_line));
+
 
     // copying block instruction to branch
     lines.copy_buffer();

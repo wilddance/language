@@ -5,28 +5,36 @@ bool_exp: adr REL_OPER adr {
 
     push($1);
     push($3);
+    
+    nextLine("CMP");
 
-    // TODO: zależy od rel_oper
-    sub();
+    $$ = $2;
         
 } | '(' adr REL_OPER adr ')' 
 
 
 adr:
 IDENT {
+    /*
     char b[10] = {0};
     sprintf(b, "$%d", v.get($1));
     string ss(b); 
-
     char* sss = strdup(ss.c_str());
-    $$ = sss;
+    */
+    
+    //$$ = sss;
+
+    $$ = str("$%d", v.get($1));
 } | 
 DIGITS {
+    /*
     char b[10] = {0};
     sprintf(b, "%d", $1);
     string ss(b);
     char* sss = strdup(ss.c_str());
     $$ = sss; 
+    */
+    $$ = str("%d", $1);
    }
 
 bool: IDENT REL_OPER IDENT{ 

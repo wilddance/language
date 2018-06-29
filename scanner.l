@@ -23,11 +23,12 @@ WHILE       "while"
 END         "end"
 IFELSE      "ifelse"
 ELSE        "else"
+PRINT       "print"
+EXIT        "exit"
 COM         ("#".*\n)
 END_ST      ";"
 DEBUG       ("debug")
 BOOL_OP     ("and"|"or")
-KEYWORD     ("while"|"print"|"begin"|"end"|"exit")
 IF          "if"|"IF"
 READ        "read"
 BOOL_VAL    ("true"|"false")
@@ -56,6 +57,7 @@ else
 return DIGITS;
 
 }
+{PRINT}     { printf("[F]IFELSE\n");      return IFELSE; }
 {IFELSE}     { printf("[F]IFELSE\n");      return IFELSE; }
 {WHILE}     { printf("[F]While\n");      return WHILE; }
 {ELSE}     { printf("[F]ELSE\n");      return ELSE; }

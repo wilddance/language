@@ -1,5 +1,4 @@
-
-1. mamy funkcje write, read, print (zamaskowana write)
+1. mamy funkcje write, read, print
 
 2. nowo zdefiniowane zmienne - tablica symboli przez którą odwołujemy się do 
 zmienych zdefinowanych w programie
@@ -7,3 +6,19 @@ zmienych zdefinowanych w programie
 3. rejestry dla jlz i innych skoków
 
 READ $x - wczytuje dane z klawiatury do pamięcię pod adresem x
+
+cmp - -1 dla arg1 mniejszego od arg2
+
+
+EQ:
+cmp / jnz
+G:
+cmp / jlez
+L:
+cmp / jgez
+GOE:
+cmp / jlz
+LOE:
+cmp / jgz
+DIFF:
+cmp / jn

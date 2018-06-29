@@ -39,6 +39,19 @@
 
     int line = 0;
 
+
+    void nextLine(){
+        s = string(buff);
+        lines.push(s);
+        printf("Code: %s\n", buff);
+        memset(buff, 0, 100);
+    }
+
+    void nextLine(const char* ins){
+        sprintf(buff, "%s", ins);
+        nextLine();
+    }
+
     char* str(const char* format, ...){
 
         va_list vl;
@@ -55,17 +68,23 @@
         return a;
     }
 
-    void nextLine(){
-        s = string(buff);
-        lines.push(s);
-        printf("Code: %s\n", buff);
-        memset(buff, 0, 100);
+    void addJumpForRel(int rel, int line){
+
+        switch(rel){
+            case EQ:
+                nextLine(str("JNZ @%d", line)); break;
+            case G:
+                nextLine(str("JLEZ @%d", line)); break;
+            case L:
+                nextLine(str("JGEZ @%d", line)); break;
+            case GOE:
+                nextLine(str("JLZ @%d", line)); break;
+            case DIFF:
+                nextLine(str("JN @%d", line)); break;
+        }
+
     }
 
-    void nextLine(const char* ins){
-        sprintf(buff, "%s", ins);
-        nextLine();
-    }
 
     void sub(){
         nextLine("SUB");
@@ -103,7 +122,7 @@
     char* s;
 }
 
-%token IF WHILE BEG END ELSE IFELSE
+%token IF WHILE BEG END ELSE IFELSE PRINT EXIT
 %token REL_OPER
 %token END_ST
 %token IDENT 
@@ -117,7 +136,7 @@
 %token STARTBLOCK
 %token ENDBLOCK
 
-%type<val> bool
+%type<val> bool bool_exp
 %type<val> REL_OPER 
 %type<val> exp DIGITS value
 %type<ch> OPER 
@@ -131,7 +150,7 @@
 
 
 s:
- | s read | s value | s debug | s if | s bool | s while
+ | s simple | s value | s if | s bool | s while
 
 
 PLACEHOLDER

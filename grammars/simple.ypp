@@ -1,5 +1,10 @@
 %%
 %%
 
-read: READ IDENT END_ST{ sprintf(buff, "READ $%d", v.get(std::string($2))); nextLine(); }
+simple: read | debug | exit | print
+
+print: PRINT adr END_ST{ nextLine(str("PUSH %s", $2)); sprintf(buff, "PRINT"); nextLine(); }
+//read: READ adr END_ST{ sprintf(buff, "READ %s", v.get(std::string($2))); nextLine(); }
+read: READ adr END_ST{ nextLine(str("READ %s", $2)); }
+exit: EXIT END_ST{ nextLine("EXIT"); }
 debug : DEBUG {debug();}
