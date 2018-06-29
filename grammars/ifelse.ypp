@@ -7,18 +7,15 @@ if: ifelse_bool block else block {
     lines.unnest();
 
     // obsługa else
-    int goto_line = lines.code_size_cur() + help + 1 - lines.nestLvl;
+    int goto_line = lines.code_size_cur() +help + 1;
+    int jump_line = lines.code_size_cur();
 
     gotoline(str("@%d", goto_line));
+
     lines.copy_buffer();
-
-
-    // making Code save code to brevious branch
     lines.unnest();
 
-    help--;
-    help--;
-    int jump_line = lines.code_size_cur() + help - lines.nestLvl;
+    help-=2;
     jlz(str("@%d", jump_line));
 
     lines.copy_buffer();
