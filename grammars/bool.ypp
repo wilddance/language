@@ -40,11 +40,4 @@ bool: IDENT REL_OPER IDENT{
 
     $$ = $2;
 
-// na początku goto koniec jeśli 
-
-
-} | 
-BOOL_VAL {
-
-    
 }

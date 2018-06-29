@@ -5,6 +5,7 @@
     #include<string.h>
     #include<vector>
     #include<stack>
+    #include<stdarg.h>
 
     #include"../classes/Vars.cpp"
     #include"../defs.h"
@@ -37,6 +38,23 @@
     Code lines;
 
     int line = 0;
+
+    char* str(const char* format, ...){
+
+        va_list vl;
+        va_start(vl, format);
+        
+        char buff[100];
+
+        vsprintf(buff, format, vl);
+        va_end(vl);
+
+        char* a =strdup(buff); 
+
+        memset(buff, 0, sizeof(char) * 100);
+        return a;
+    }
+
     void nextLine(){
         s = string(buff);
         lines.push(s);
@@ -85,7 +103,7 @@
     char* s;
 }
 
-%token IF WHILE BEG END
+%token IF WHILE BEG END ELSE
 %token REL_OPER
 %token END_ST
 %token IDENT 

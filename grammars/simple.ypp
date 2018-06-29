@@ -1,0 +1,5 @@
+%%
+%%
+
+read: READ IDENT END_ST{ sprintf(buff, "READ $%d", v.get(std::string($2))); nextLine(); }
+debug : DEBUG {debug();}

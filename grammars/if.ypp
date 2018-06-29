@@ -5,18 +5,12 @@ if: if_bool block END_ST{
 
     lines.unnest();
 
-    //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
-    //int jump_line = lines.code_size() + help + lines.nestLvl;
     int jump_line = lines.code_size() + help - lines.nestLvl;
-    char b[10] = {0};
+    char* a = str("@%d", jump_line);
 
-    sprintf(b, "@%d", jump_line);
-
-    char* a = strdup(b);
     jlz(a);
 
     lines.copy_buffer();
-
     help--;
 }
 

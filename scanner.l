@@ -21,6 +21,7 @@
 BEG         "begin"
 WHILE       "while"
 END         "end"
+ELSE        "else"
 COM         ("#".*\n)
 END_ST      ";"
 DEBUG       ("debug")
@@ -39,7 +40,18 @@ IDENT       ([a-z]+)
 
 {REL_OPER}  { printf("[F] REL_OPER: %s\n", yytext); yylval.val = 1; return REL_OPER; }
 {BEG}       { d("[F]Beg\n");        return BEG; }
+{BOOL_VAL}  { d("[F]Beg\n");    
+
+if(strcmp(yytext, "true") == 0)
+    yylval.val = 1; 
+else 
+    yylval.val = 0;
+
+return DIGITS;
+
+}
 {WHILE}     { d("[F]While\n");      return WHILE; }
+{ELSE}     { d("[F]ELSE\n");      return ELSE; }
 {END}       { d("[F]End\n");        return END; }
 {END_ST}    { d("[F]End_st\n");     return END_ST; }
 {BOOL_VAL}  { d("[F]Bool\n");       return BOOL_VAL; }
