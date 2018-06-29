@@ -1,7 +1,7 @@
 %%
 %%
 
-if: ifelse_bool block else block END_ST {
+if: ifelse_bool block else block {
 
     // making Code save code to brevious branch
     lines.unnest();

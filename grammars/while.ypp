@@ -1,7 +1,7 @@
 %%
 %%
 
-while: while_bool block END_ST{
+while: while_bool block {
 
     // making Code save code to brevious branch
     lines.unnest();
