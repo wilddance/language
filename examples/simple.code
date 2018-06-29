@@ -1,0 +1,8 @@
+# komentarz
+exit;
+read a;
+print b;
+print true; # true jako 1
+print 2+4; # true jako 0
+
+debug

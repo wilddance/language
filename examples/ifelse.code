@@ -1,0 +1,6 @@
+ifelse(a==b){
+    print a;
+} else {
+    print b;
+}
+debug
