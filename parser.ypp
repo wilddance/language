@@ -123,7 +123,7 @@
 }
 
 %token IF WHILE BEG END ELSE IFELSE PRINT EXIT
-%token REL_OPER
+%token REL_OPER BOOL_OPER
 %token END_ST
 %token IDENT 
 %token OPER
@@ -136,13 +136,13 @@
 %token STARTBLOCK
 %token ENDBLOCK
 
-%type<val> bool bool_exp
-%type<val> REL_OPER 
+%type<val> bool bool_exp while_bool
+%type<val> REL_OPER BOOL_OPER
 %type<val> exp DIGITS value
 %type<ch> OPER 
+%type<ch> STARTBLOCK ENDBLOCK
 %type<s> IDENT BOOL_VAL adr
 %type<s> READ DEBUG
-%type<ch> STARTBLOCK ENDBLOCK
 
 
 %%

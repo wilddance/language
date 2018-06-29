@@ -33,7 +33,7 @@ IF          "if"|"IF"
 READ        "read"
 BOOL_VAL    ("true"|"false")
 OPER        ("+"|"-"|"*"|"/"|"%")
-DIGITS      [0-9]+
+DIGITS      "-"?[0-9]+
 REL_OPER    ("=="|"<"|"<="|">"|">="|"<>")
 ASSIGN      (":=")
 IDENT       ([a-z]+)
@@ -44,6 +44,8 @@ IDENT       ([a-z]+)
 {REL_OPER}  { printf("[F] REL_OPER: %s\n", yytext); yylval.val = 1; return REL_OPER; }
 {BEG}       { d("[F]Beg\n");        return BEG; }
 {END}       { printf("[F]End\n");        return END; }
+{PRINT}     { printf("[F]Print\n");      return PRINT; }
+{EXIT}       { printf("[F]Exit\n");        return EXIT; }
 
 "{"       { d("[F]Beg\n");        return BEG; }
 "}"       { printf("[F]End\n");        return END; }
@@ -57,7 +59,6 @@ else
 return DIGITS;
 
 }
-{PRINT}     { printf("[F]IFELSE\n");      return IFELSE; }
 {IFELSE}     { printf("[F]IFELSE\n");      return IFELSE; }
 {WHILE}     { printf("[F]While\n");      return WHILE; }
 {ELSE}     { printf("[F]ELSE\n");      return ELSE; }
