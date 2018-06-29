@@ -122,7 +122,7 @@
     char* s;
 }
 
-%token IF WHILE BEG END ELSE IFELSE PRINT EXIT
+%token IF WHILE BEG END ELSE IFELSE PRINT EXIT 
 %token REL_OPER BOOL_OPER NUM_OPER
 %token END_ST
 %token IDENT 
@@ -136,7 +136,7 @@
 %token STARTBLOCK
 %token ENDBLOCK
 
-%type<val> bool bool_exp while_bool if_bool
+%type<val> bool bool_exp while_bool if_bool ifelse_bool
 %type<val> REL_OPER BOOL_OPER
 %type<val> exp DIGITS value digits
 %type<ch> OPER 

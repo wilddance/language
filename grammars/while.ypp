@@ -9,7 +9,6 @@ while: while_bool block {
     // address for jump after finishing while
     int jump_line = lines.code_size_cur() + help - lines.nestLvl;
 
-    
     // adding instruction to jump
     addJumpForRel($1, jump_line);
 

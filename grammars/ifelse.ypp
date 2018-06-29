@@ -7,7 +7,7 @@ if: ifelse_bool block else block {
     lines.unnest();
 
     // obsługa else
-    int goto_line = lines.code_size_cur() +help + 1;
+    int goto_line = lines.code_size_cur() + help;
     int jump_line = lines.code_size_cur();
 
     gotoline(str("@%d", goto_line));
@@ -16,11 +16,9 @@ if: ifelse_bool block else block {
     lines.unnest();
 
     help-=2;
-    jlz(str("@%d", jump_line));
+    addJumpForRel($1, jump_line);
 
     lines.copy_buffer();
-
-    
 }
 
 else: ELSE{
@@ -28,7 +26,7 @@ else: ELSE{
 }
 
 ifelse_bool: IFELSE bool_exp{
-    puts("Starting ifelse");
     help+=2;
+    $$ = $2;
     lines.nest();
 }

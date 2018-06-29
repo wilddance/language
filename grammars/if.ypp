@@ -8,7 +8,6 @@ if: if_bool block{
     int jump_line = lines.code_size_cur() + help;
 
     addJumpForRel($1, jump_line);
-    
 
     lines.copy_buffer();
     help-=1;
