@@ -6,25 +6,32 @@ while: while_bool block END_ST{
     lines.unnest();
 
     //int jump_line = lines.nests[lines.nestLvl].size() + lines.nests[lines.nestLvl+1].size();
-    int jump_line = lines.code_size() + help;
+
+    // przed dodatniem jump i goto
+    //////////////// jump
+    // +3 ; dodaje siebie, cyzli skok, goto, oraz przejście na kolejny wyraz
+    int jump_line = lines.code_size_cur() + help - lines.nestLvl;
+    ////////////////
 
     char b[10] = {0};
-
     sprintf(b, "@%d", jump_line);
-
     char* a = strdup(b);
     jlz(a);
-
     memset(b, 0, sizeof(char)*10);
+
+    //////////////// goto
+    printf("AAAAAAAAAAAAAAAAAAhelp: %d\n", help);
+    jump_line = line_stack.top() + lines.nestLvl;
+    line_stack.pop();
+    ////////////////
+
+    help-=2;
+
     lines.copy_buffer();
 
-    // goto, overriding jump line
-    jump_line = line_stack.top();
-    line_stack.pop();
     sprintf(b, "@%d", jump_line);
     gotoline(b);
 
-    help -= 2;
 }
 
 while_bool: while bool_exp{
@@ -32,8 +39,9 @@ while_bool: while bool_exp{
 }
 
 while: WHILE{ 
-    help += 2;
-    printf("TEATATTTA\n");
+    help+= 2;
+    printf("AAAAAAAAAAAAAAAAAA: %d\n", lines.code_size());
+    //line_stack.push(lines.code_size_cur());
     line_stack.push(lines.code_size());
 }
 

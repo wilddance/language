@@ -17,12 +17,10 @@ if: if_bool block END_ST{
 
     lines.copy_buffer();
 
-    help -= 1;
 }
 
 // odpowiada za pushe i jump
 if_bool: if bool_exp{
-    help += 1;
     lines.nest();
 }
 

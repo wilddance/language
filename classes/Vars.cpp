@@ -64,7 +64,7 @@ public:
         
     int code_size_cur(){
         int ret = 0;
-        for(int i =0; i<=nestLvl; i++){
+        for(int i =0; i<100; i++){
             ret += nests[i].size();
         }
         return ret;
@@ -82,7 +82,7 @@ public:
     void print(){
 
         puts("Code:");
-        int k = 0;
+        int k = 1;
         for(int i = 0; i < 100; i++){
 
             vector<string> v = nests[i];

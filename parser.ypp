@@ -40,7 +40,7 @@
     void nextLine(){
         s = string(buff);
         lines.push(s);
-        printf("%s\n", buff);
+        printf("Code: %s\n", buff);
         memset(buff, 0, 100);
     }
 
