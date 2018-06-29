@@ -7,3 +7,11 @@ enum Rel_oper{
     LOE,
     DIFF  
 };
+
+enum Num_oper{
+    PLUS,
+    MINUS,
+    MUL,
+    DIV,
+    MOD
+};

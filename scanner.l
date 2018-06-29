@@ -32,7 +32,7 @@ BOOL_OP     ("and"|"or")
 IF          "if"|"IF"
 READ        "read"
 BOOL_VAL    ("true"|"false")
-OPER        ("+"|"-"|"*"|"/"|"%")
+NUM_OPER        ("+"|"-"|"*"|"/"|"%")
 DIGITS      "-"?[0-9]+
 REL_OPER    ("=="|"<"|"<="|">"|">="|"<>")
 ASSIGN      (":=")
@@ -41,7 +41,35 @@ IDENT       ([a-z]+)
 %%
 
 \n {}
-{REL_OPER}  { printf("[F] REL_OPER: %s\n", yytext); yylval.val = 1; return REL_OPER; }
+
+{NUM_OPER}  { 
+
+printf("[F] NUM_OPER: %s\n", yytext); 
+
+if(strcmp(yytext, "+") == 0) yylval.val = PLUS; else
+if(strcmp(yytext, "-") == 0) yylval.val = MINUS; else
+if(strcmp(yytext, "*") == 0) yylval.val = MUL; else
+if(strcmp(yytext, "/") == 0) yylval.val = DIV; else
+if(strcmp(yytext, "%") == 0) yylval.val = MOD; else
+
+return NUM_OPER; 
+}
+
+{REL_OPER}  { 
+
+
+if(strcmp(yytext, "==") == 0) yylval.val = EQ; else
+if(strcmp(yytext, "<") == 0) yylval.val = L; else
+if(strcmp(yytext, "<=") == 0) yylval.val = LOE; else
+if(strcmp(yytext, ">") == 0) yylval.val = G; else
+if(strcmp(yytext, ">=") == 0) yylval.val = GOE; else
+if(strcmp(yytext, "<>") == 0) yylval.val = DIFF;
+
+printf("[F] REL_OPER: %s(%d)\n", yytext, yylval.val); 
+
+return REL_OPER; 
+}
+
 {BEG}       { d("[F]Beg\n");        return BEG; }
 {END}       { printf("[F]End\n");        return END; }
 {PRINT}     { printf("[F]Print\n");      return PRINT; }
@@ -68,27 +96,7 @@ return DIGITS;
 {IF}        { printf("[F]If\n");         return IF;}
 {READ}      { printf("[F] Read\n");      return READ;}
 {DIGITS}    { yylval.val = atoi(yytext);            printf("[F]Zwracam liczbe: %d\n", yylval.val); return DIGITS; } 
-{OPER}      { yylval.ch = yytext[0];                printf("[F]Zwracam oper %c \n", yylval.ch); return OPER; }
 {IDENT}     { yylval.s= strndup(yytext, yyleng+1);  printf("[F]IDENT: %s\n", yylval.s);  return IDENT; }
 {COM}       { }
 
 %%
-
-/*
-{  { d("[F] Start block: %s\n"); return STARTBLOCK; }
-}  { d("[F] Stop block: %s\n"); return ENDBLOCK; }
-{KEYWORD}   { d("KEYWORD: %s\n",yytext); return IDENT; }
-.     printf("[F]Unkown: %s\n", yytext);
-
-{COM}       {}
-{ASSIGN}    cout<<"ASSIGN "<<yytext<<endl;
-{OPER}      cout<<"NUM_OP "<<yytext<<endl;
-{BOOL}      cout<<"BOOL "<<yytext<<endl;
-
-int main() {
-
-    yylex();
-
-    return 0;
-
-}*/

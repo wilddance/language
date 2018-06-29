@@ -26,7 +26,7 @@ IDENT {
 
     $$ = str("$%d", v.get($1));
 } | 
-DIGITS {
+digits {
     /*
     char b[10] = {0};
     sprintf(b, "%d", $1);

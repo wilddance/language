@@ -1,3 +1,5 @@
 %%
 %%
 
+
+digits: DIGITS NUM_OPER DIGITS{ printf("Działanie ze znakiem");} | DIGITS

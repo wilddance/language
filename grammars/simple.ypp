@@ -3,7 +3,7 @@
 
 simple: read | debug | exit | print
 
-print: PRINT adr END_ST{ nextLine(str("PUSH %s", $2)); sprintf(buff, "PRINT"); nextLine(); }
+print: PRINT adr END_ST{ nextLine(str("PUSH %s", $2)); nextLine("PRINT"); }
 read: READ adr END_ST{ nextLine(str("READ %s", $2)); }
 exit: EXIT END_ST{ nextLine("EXIT"); }
 debug : DEBUG {debug();}
